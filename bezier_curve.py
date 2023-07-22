@@ -3,6 +3,7 @@ from spline import *
 
 class Bezier(Spline):
     # Uses repeated linear interpolation to sample n points along the curve
+    # Computationally inefficient method, will be replaced later
     def sample(self, n=10):
         line = []
         for i in range(n + 1):
