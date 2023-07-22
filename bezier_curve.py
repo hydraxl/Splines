@@ -1,21 +1,26 @@
 from point import *
 
-# Uses nested linear interpolation to create a bezier curve
-# Takes in a list of control points
-# Outputs a list of points along the bezier curve
-def bezier_lerp(points, steps=10):
-    line = []
-    for i in range(steps + 1):
-        temp_points = []
-        for p in range(len(points) - 1):
-            temp_points.append((points[p] * (steps - i) +  points[p + 1] * i) / steps)
-        
-        while (len(temp_points) > 1):
-            new_points = []
-            for p in range(len(temp_points) - 1):
-                new_points.append((temp_points[p] * (steps - i) +  temp_points[p + 1] * i) / steps)
-            temp_points = new_points
-        
-        line.append(temp_points[0])
+class Bezier:
+    def __init__(self, control_points):
+        # list of control points that represent the curve
+        self.control_points = control_points
     
-    return line
+    # Uses repeated linear interpolation to sample n points along the curve
+    def sample(self, n=10):
+        line = []
+        for i in range(n + 1):
+            temp_points = []
+            for p in range(len(self.control_points) - 1):
+                new_point = (self.control_points[p] * (n - i) +  self.control_points[p + 1] * i) / n
+                temp_points.append(new_point)
+            
+            while (len(temp_points) > 1):
+                new_points = []
+                for p in range(len(temp_points) - 1):
+                    new_point = (temp_points[p] * (n - i) +  temp_points[p + 1] * i) / n
+                    new_points.append(new_point)
+                temp_points = new_points
+            
+            line.append(temp_points[0])
+        
+        return line
