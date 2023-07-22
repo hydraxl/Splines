@@ -1,10 +1,7 @@
 from point import *
+from spline import *
 
-class Bezier:
-    def __init__(self, control_points):
-        # list of control points that represent the curve
-        self.control_points = control_points
-    
+class Bezier(Spline):
     # Uses repeated linear interpolation to sample n points along the curve
     def sample(self, n=10):
         line = []
