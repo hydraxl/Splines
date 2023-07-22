@@ -1,4 +1,4 @@
-import gui
+import poorly_designed_but_working_gui as gui
 from point import *
 from bezier_curve import *
 
@@ -8,11 +8,11 @@ P3 = Point(1, 1)
 P4 = Point(1, 0)
 control_points = [P1, P2, P3, P4]
 
-curve = Bezier(control_points)
+spline = Bezier(control_points)
 
-curve_samples = curve.sample(30)
+samples = spline.sample(30)
 
-gui.plot_lines(curve_samples)
+gui.plot_lines(samples)
 gui.plot_points(control_points)
 
 gui.display()

@@ -1,24 +1,23 @@
+from point import *
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 
-# initialization parameters for graph
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_title('Spline Test')
+class gui:
+    def __init__(self, splines=[]):
+        # list of all splines to be displayed
+        self.splines = splines
 
-# plots points with lines connecting them
-def plot_lines(points):
-    xVals = [point.x for point in points]
-    yVals = [point.y for point in points]
-    plt.plot(xVals, yVals, 'b', color='k')
+        # global variables
+        self.draggable_points = set()
 
-# plots points as dots
-def plot_points(points):
-    xVals = [point.x for point in points]
-    yVals = [point.y for point in points]
-    plt.plot(xVals, yVals, 'o', color='k')
+        # max pixel distance from a point to be considered "on" the point
+        self.epsilon = 10
 
-def display():
-    plt.show()
+        # graph parameters
+        self.fig = plt.figure()
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_xlabel('x')
+        self.ax.set_ylabel('y')
+        self.ax.set_title('Spline Test')
+    
+    # TODO create actual GUI
