@@ -2,55 +2,74 @@ from point import *
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 
-class GUI:
-    def __init__(self):
-        # list of all splines to be displayed
-        self.splines = set()
 
-        # global variables
-        self.draggable_points = set()
+# list of all splines to be displayed
+splines = set()
 
-        # max pixel distance from a point to be considered "on" the point
-        self.epsilon = 10
+# global variables
+draggable_points = set()
+selected_point = None
 
-        # graph parameters
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111)
-        self.ax.set_xlabel('x')
-        self.ax.set_ylabel('y')
-        self.ax.set_title('Spline Test')
+# max pixel distance from a point to be considered "on" the point
+epsilon = 10
+
+# graph parameters
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('Spline Test')
     
-    def display(self):
-        plt.show()
+def display():
+    plt.show()
+
+# removes a spline from being shown
+# returns False if spline wasn't there to begin with
+def remove_spline(spline):
+    global splines
+
+    if not spline in splines: return False
     
-    # removes a spline from being shown
-    # returns False if spline wasn't there to begin with
-    def remove_spline(self, spline):
-        if not spline in self.splines: return False
-        
-        self.splines.remove(spline)
+    splines.remove(spline)
 
-        # TODO rest of function
+    # TODO rest of function
 
-        return True
+    return True
+
+def add_spline(spline, samples=10):
+    global splines
+    global draggable_points
+    global epsilon
+
+    # if spline is already being shown, redraw with new number of samples
+    if spline in splines:
+        remove_spline(spline)
     
-    def add_spline(self, spline, samples=10):
-        # if spline is already being shown, redraw with new number of samples
-        if spline in self.splines:
-            self.remove_spline(spline)
-        
-        self.splines.add(spline)
+    splines.add(spline)
 
-        # plot control points of spline
-        self.draggable_points |= set(spline.control_points)
-        xVals = [point.x for point in spline.control_points]
-        yVals = [point.y for point in spline.control_points]
-        plt.plot(xVals, yVals, 'o', color='k', picker=True, pickradius=self.epsilon)
-       
-        # plot curve of spline
-        line = spline.sample(samples)
-        xVals = [point.x for point in line]
-        yVals = [point.y for point in line]
-        plt.plot(xVals, yVals, 'b')
+    # plot control points of spline
+    # plots points individually so that each one is a separate artist object
+    draggable_points |= set(spline.control_points)
+    for point in spline.control_points:
+        plt.plot(point.x, point.y, 'o', color='k', picker=True, pickradius=epsilon)
 
-    # TODO rest of GUI
+    
+    # plot curve of spline
+    line = spline.sample(samples)
+    xVals = [point.x for point in line]
+    yVals = [point.y for point in line]
+    plt.plot(xVals, yVals, 'b')
+
+def onpick(event):
+    global draggable_points
+    global selected_point
+
+    artist = event.artist
+    x = artist.get_xdata()[0]
+    y = artist.get_ydata()[0]
+    for point in draggable_points:
+        if x == point.x and y == point.y:
+            selected_point = point
+    print(selected_point)
+
+fig.canvas.mpl_connect('pick_event', onpick)
