@@ -17,6 +17,6 @@ class Point:
     def __truediv__(self, n):
         return Point(self.x / n, self.y / n)
     
-    # repr for debugging
+    # string representation for debugging
     def __repr__(self):
         return "Point(" + repr(self.x) + ", " + repr(self.y) + ")"
