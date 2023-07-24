@@ -1,5 +1,3 @@
-from point import *
-
 # generic spline class only ever used as a parent class
 # contains standard info and functions that every spline class must contain
 class Spline:
