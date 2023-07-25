@@ -1,6 +1,5 @@
 import gui
 from bezier_curve import *
-
 import numpy as np
 
 gui.num_samples = 30
@@ -10,7 +9,13 @@ P2 = np.array([0., 1.])
 P3 = np.array([1., 1.])
 P4 = np.array([1., 0.])
 
-control_points = np.array([P1, P2, P3, P4])
-spline = Bezier(control_points)
-gui.add_spline(spline)
+control_points_1 = np.array([P1, P2, P3, P4])
+spline_1 = Bezier(control_points_1)
+control_points_2 = np.array([P1, P3, P2, P4])
+spline_2 = Bezier(control_points_2)
+
+print(spline_1.control_points[0] is spline_2.control_points[0])
+
+gui.add_spline(spline_1)
+gui.add_spline(spline_2)
 gui.display()

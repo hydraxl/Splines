@@ -1,3 +1,5 @@
+import numpy as np
+
 # generic spline class only ever used as a parent class
 # contains standard info and functions that every spline class must contain
 class Spline:
@@ -6,4 +8,4 @@ class Spline:
     
     # generic spline doesn't exist, so sample returns empty list
     def sample(n=10):
-        return []
+        return np.empty(0)

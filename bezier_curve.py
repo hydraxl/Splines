@@ -1,5 +1,4 @@
 from spline import *
-
 import numpy as np
 
 class Bezier(Spline):
