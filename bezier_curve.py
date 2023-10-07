@@ -1,8 +1,8 @@
-from spline import *
+from spline import Spline
 import numpy as np
 
 
-class Bezier(Spline):
+class Bezier_Curve(Spline):
     # Uses repeated linear interpolation to sample n points along the curve
     # Computationally inefficient method, will be replaced later
     def sample(self, n=10):
